@@ -1,0 +1,74 @@
+
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="generator" content="Jekyll v3.8.5">
+        <title>Registration e-commerce demo</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <style>
+            body {
+                background: -webkit-linear-gradient(left, #E0EAFC,#CFDEF3);
+                /*                padding: 100px;*/
+            }
+        </style>
+    </head>
+    <body>
+        <div th:replace="homepage::nav"></div>
+        <div class="container"style="margin: 25px">
+            <h2>Shipping address:</h2>
+        </div>
+        <div class="container" style="padding: 75px">
+            <form id="submit-form" action="#" th:action="@{/secured/order}" th:object="${user}" method="post">
+                <div class="form-group row">
+                    <label for="email" class="col-2 col-form-label">Email</label>
+                    <div class="col-4">
+                        <input type="hidden" class="form-control" th:field="*{id}" th:value="*{id}" readonly>
+                        <input id="email" type="email" class="form-control" th:field="*{email}" placeholder="abc@xyz.com" th:value="*{email}" readonly>
+                    </div>
+                    <label for="username" class="col-2 col-form-label">Username</label>
+                    <div class="col-4">
+                        <input id="username" type="text" class="form-control" th:field="*{username}" placeholder="username" th:value="*{username}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="address" class="col-2 col-form-label">Address</label>
+                    <div class="col-4">
+                        <input id="address" type="text" class="form-control" th:field="*{address}" placeholder="address" th:value="*{address}"><div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" th:class="'invalid-feedback d-block'">Address error</div>
+                    </div>
+                    <label for="city" class="col-2 col-form-label">City</label>
+                    <div class="col-4">
+                        <input id="city" type="text" class="form-control" th:field="*{city}" placeholder="city" th:value="*{city}"><div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" th:class="'invalid-feedback d-block'">City error</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="state" class="col-2 col-form-label">State</label>
+                    <div class="col-4">
+                        <input id="state" type="text" class="form-control" th:field="*{state}" placeholder="state" th:value="*{state}"><div th:if="${#fields.hasErrors('state')}" th:errors="*{state}" th:class="'invalid-feedback d-block'">State error</div>
+                    </div>
+                    <label for="pincode" class="col-1 col-form-label">Pincode</label>
+                    <div class="col-2">
+                        <input id="pincode" type="text" class="form-control" th:field="*{pincode}" placeholder="pincode" th:value="*{pincode}"><div th:if="${#fields.hasErrors('pincode')}" th:errors="*{pincode}" th:class="'invalid-feedback d-block'">Pincode error</div>
+                    </div>
+                    <label for="phone" class="col-1 col-form-label">Phone</label>
+                    <div class="col-2">
+                        <input id="phone" type="tel" class="form-control" th:field="*{phone}" placeholder="phone" th:value="*{phone}"><div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" th:class="'invalid-feedback d-block'">Phone error</div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group row justify-content-end">
+                    <div class="col-2">
+                        <input type="hidden" th:name="entryId" th:value="${entryId}">
+                        <input id="submit" type="submit" class="btn btn-success" value="Place Order" onclick="document.getElementById('submit').hidden = true">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

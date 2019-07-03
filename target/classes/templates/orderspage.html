@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Welcome to e-commerce demo.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </head>
+    <body style="background: -webkit-linear-gradient(left, #F2994A,#F2C94C);">
+        <div th:replace="homepage::nav"></div>
+        <div class="container-fluid" style="padding: 25px">
+            <h1 class="display-5">Your Orders:</h1>
+            <div class="container" style="background: -webkit-linear-gradient(left, #F09819,#F09819);padding: 25px;">
+                <div th:if="${entries}>0">
+                    <div th:each="i: ${#numbers.sequence(0,entries-1)}" class="row card" style="margin: 15px 0px 15px 0px;padding: 15px;background: -webkit-linear-gradient(left, #FFD200,#FFD200)">
+                        <div class="card-header">
+                            <div class="text-secondary" th:text="|Order placed on: ${orders.get(i).orderDate}.|"></div>
+                        </div>
+                        <div class="card body" style="padding: 10px">
+                            <div class="row justify-content-between">
+                                <div class="col-10">
+                                    <h5 class="text-muted" th:text="|Order #:  ${orders.get(i).id}|">order id.</h5>
+                                </div>
+                                <div class="col-2">
+                                    <span>Order Total:&nbsp;</span><p style="color: brown" th:text="|&#8377; ${orders.get(i).orderTotal}|">Order total</p>
+                                </div>
+                            </div>
+                            <div class="col row justify-content-left" th:each="orderItem:${orders.get(i).orderItems}" style="border: 1px blue solid">
+                                <div class="col-2">
+                                    <a th:href="|/product/${orderItem.productId}|"><img class="img-thumbnail" th:src="${orderItem.images}" th:alt="|${orderItem.name} image cap|" width="50px" height="50px"></a>
+                                </div>
+                                <div class="col-8">
+                                    <div class="row">
+                                        <a style="text-decoration: none;color: inherit" th:href="|/product/${orderItem.productId}|"><h6 th:text="${orderItem.name}">product name.</h6></a>
+                                    </div>
+                                    <div class="row">
+                                        <p th:text="|Quantity: ${orderItem.quantity}|">quantity</p>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <p style="color: brown" th:text="|&#8377; ${orderItem.price}|">Product price</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${entries}<=0">No orders yet.</div>
+            </div>
+        </div>
+</body>
+</html>

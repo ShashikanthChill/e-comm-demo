@@ -1,0 +1,67 @@
+
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="generator" content="Jekyll v3.8.5">
+        <title>Login e-commerce demo</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <style>
+            body {
+                background: -webkit-linear-gradient(left, #E0EAFC,#CFDEF3);
+                /*padding: 100px;*/
+            }
+        </style>
+    </head>
+    <body>
+        <div th:replace="homepage::nav"></div>
+        <div class="container" style="padding: 75px">
+            <div th:if="${login_Failed}" class="alert alert-danger" role="alert">
+                Login failed. Please check the credentials and try again.
+            </div>
+            <center>
+                <form action="#" th:action="@{login}" method="post">
+                    <img class="mb-4" th:src="@{/images/webapp-logo.jpg}" alt="logo" width="100" height="100">
+                    <h1 class="h3 mb-4 font-weight-normal" th:text="#{webapp.login}">Login here:</h1>
+                    <div class="form-group row" style="margin-top: 50px">
+                        <label for="usernameOrEmail" class="col-sm-6 col-form-label">Username or Email</label>
+                        <div class="col-sm-4">
+                            <input id="usernameOrEmail" type="text" class="form-control" name="username">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-6 col-form-label">Password</label>
+                        <div class="col-sm-4">
+                            <input id="password" type="password" class="form-control" name="password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                        </div>
+                    </div>
+                    <div  th:if="${shouldRefer}" class="form-group row">
+                        <div class="col-sm-4">
+                            <input type="hidden" name="referer" th:value="${referer}"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <br>
+                            <p class="text-dark">New member? <a class="badge badge-primary" href="#" th:href="@{register}">Register</a> here.</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="submit" class="btn btn-primary" value="Login">
+                        </div>
+                    </div>
+                </form>
+            </center>
+        </div>
+    </body>
+</html>

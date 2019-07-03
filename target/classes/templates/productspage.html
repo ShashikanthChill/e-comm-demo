@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Welcome to e-commerce demo.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </head>
+    <body style="background: -webkit-linear-gradient(left, #F2994A,#F2C94C);">
+        <div th:replace="homepage::nav"></div>
+        <div class="container-fluid" style="padding: 25px">
+            <div class="container" style="background: -webkit-linear-gradient(left, #F09819,#F09819);padding: 25px;">
+                <div th:each="product: ${listOfProducts}" class="row card" style="margin: 15px 0px 15px 0px;padding: 15px;background: -webkit-linear-gradient(left, #FFD200,#FFD200)">
+                    <div class="container-fluid row justify-content-left" style="padding: 5px">
+                        <a th:href="|product/${product.id}|"><img class="img-thumbnail" th:src="${product.images}" th:alt="|${product.name} image cap|" width="150px" height="150px"></a>
+                        <div class="card-body">
+                            <a style="text-decoration: none;color: inherit" th:href="|/product/${product.id}|"><h3 th:text="${product.name}">product name.</h3></a>
+                            <h5 th:if="${product.productType} == 'book'" th:text="|by ${product.author}|">product property.</h5></a>
+                            <h5 th:if="${product.productType} == 'mobile'" th:text="|from ${product.manufacturer}|">product property.</h5></a>
+                            <h5 th:if="${product.productType} == 'computer'" th:text="|from ${product.manufacturer}|">product property.</h5></a>
+                            <p th:text="|&#8377; ${product.price}|">product price</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </body>
+</html>

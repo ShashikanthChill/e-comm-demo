@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Welcome to e-commerce demo.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </head>
+    <body style="background: -webkit-linear-gradient(left, #F2994A,#F2C94C);">
+        <div th:replace="homepage::nav"></div>
+        <div class="container-fluid" style="padding: 25px">
+            <h1 class="display-5">Your Cart:</h1>
+            <div class="container" style="background: -webkit-linear-gradient(left, #F09819,#F09819);padding: 25px;">
+                <div th:if="${entries}>0">
+                    <div th:each="i: ${#numbers.sequence(0,entries-1)}" class="row card" style="margin: 15px 0px 15px 0px;padding: 15px;background: -webkit-linear-gradient(left, #FFD200,#FFD200)">
+                        <div class="container-fluid row justify-content-left" style="padding: 5px">
+                            <a th:href="|/product/${allProducts.get(i).id}|"><img class="img-thumbnail" th:src="${allProducts.get(i).images}" th:alt="|${allProducts.get(i).name} image cap|" width="75px" height="75px"></a>
+                            <div class="card-body">
+                                <a style="text-decoration: none;color: inherit" th:href="|/product/${allProducts.get(i).id}|"><h3 th:text="${allProducts.get(i).name}">product name.</h3></a>
+                                <p style="color: brown" th:text="|&#8377; ${allProducts.get(i).price}|">product price</p>
+                                <p th:text="|Quantity: ${userCartEntries.get(i).quantity}|">product price</p>
+                            </div>
+                        </div>
+                        <div class="container-fluid row justify-content-between">
+                            <div class="col-10">
+                                <a th:href="|/secured/updateCart/${userCartEntries.get(i).id}/1|" class="btn btn-danger">Delete One</a>
+                                <a th:href="|/secured/updateCart/${userCartEntries.get(i).id}/${userCartEntries.get(i).quantity}|" class="btn btn-danger">Delete All</a>
+                            </div>
+                            <div class="col-2">
+                                <span>Total:&nbsp;</span><p style="color:brown" th:text="|&#8377; ${userCartEntries.get(i).quantity * allProducts.get(i).price}|">product price</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="row card" style="background-color: white;margin: 15px 0px 15px 0px;padding: 15px;">
+                        <div class="container-fluid row justify-content-between" style="padding: 5px">
+                            <div class="col-6">
+                                <span>Grand Total:&nbsp;</span><p style="color:brown" th:text="|&#8377; ${grandTotal}|">product price</p>
+                            </div>
+                            <div class="col-2">
+                                <a th:href="@{/secured/productCheckout}" class="btn btn-info">Checkout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${entries}<=0">No items added to cart yet.</div>
+            </div>
+        </div>
+    </div>  
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Welcome to e-commerce demo.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </head>
+    <body style="background: -webkit-linear-gradient(left, #F2994A,#F2C94C);">
+        <div th:replace="homepage::nav"></div>
+    <center>
+        <div th:if="${cartAddSuccess}" class="container alert alert-success" role="alert" style="margin: 10px">
+            Product successfully added to cart.
+        </div>
+        <div th:if="${directBuyFailed}" class="container alert alert-warning" role="alert" style="margin: 10px">
+            Product already in <a th:href="@{/secured/cart}" class="alert-link">cart</a>.You can checkout from here.
+        </div>
+    </center>
+    <div class="container-fluid" style="padding: 50px">
+        <div class="row"  style="background-color: white;padding: 25px;">
+            <div class="col-3" style="padding: 25px;">
+                <center>
+                    <img class="img-container" th:src="${product.images}" th:alt="|${product.name} image cap|" width="225px" height="425px">
+                </center>
+            </div>
+            <div class="col-9" style="background: -webkit-linear-gradient(left, #E0EAFC,#CFDEF3);padding: 25px;">
+                <div class="row">
+                    <div class="col">
+                        <h4 th:text="${product.name}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h6 th:if="${product.productType} == 'book'" th:text="|by ${product.author}|">product property.</h6></a>
+                        <h6 th:if="${product.productType} == 'mobile'" th:text="|from ${product.manufacturer}|">product property.</h6></a>
+                        <h6 th:if="${product.productType} == 'computer'" th:text="|from ${product.manufacturer}|">product property.</h6></a>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <span>Price:</span><h5 style="color: brown" th:text="|&#8377; ${product.price}|">price</h5>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-8">
+                        <p  th:text="${product.description}"/>
+                    </div>
+                    <div class="col-4">
+                        <div class="row justify-content-around">
+                            <form action="#" th:action="@{/secured/addToCart}">
+                                <input type="hidden" name="productId" th:value="${product.id}">
+                                <input type="submit" class="btn btn-info" value="Add to Cart"/>
+                            </form>
+                            <form action="#" th:action="@{/secured/prepareProductCheckout}">
+                                <input type="hidden" name="productId" th:value="${product.id}">
+                                <input type="submit" class="btn btn-info" value="Buy Now"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="row "style="background-color: white;padding: 25px;">
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <h4 style="color: sienna">Product Details:</h4>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div th:if="${product.productType} == 'book'" class="col-4">
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|ISBN: ${product.isbn}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Author: ${product.author}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Edition: ${product.edition}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Lanuage: ${product.lang}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Pages: ${product.pages}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                    <div th:if="${product.productType} == 'computer'" class="col-4">
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Manufacturer: ${product.manufacturer}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Size: ${product.size} inches|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|colour: ${product.colour}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Processor: ${product.processor}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Graphics:  ${product.graphics}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Storage:  ${product.storage} GB|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Ram: ${product.ram} GB|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|OS: ${product.os}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Battery: ${product.battery} mAh|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                    <div th:if="${product.productType} == 'mobile'" class="col-4">
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Manufacturer: ${product.manufacturer}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Model: ${product.modelNumber}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Size: ${product.size} inches|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|colour: ${product.colour}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Processor: ${product.processor}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Storage:  ${product.storage} GB|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Ram: ${product.ram} GB|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|OS: ${product.os}|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                        <h6 th:text="|Battery: ${product.battery} mAh|">product property.</h6>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
