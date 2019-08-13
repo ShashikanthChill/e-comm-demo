@@ -25,11 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     UserPersistenceService userPersistenceService;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/secured/**").hasAuthority("USER").antMatchers("/", "/**").permitAll();
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeRequests().antMatchers("/secured/**").hasAuthority("USER").antMatchers("/", "/**").permitAll();
 //        http.formLogin().loginPage("/login").successHandler(successHandler()).failureUrl("/login-error").and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
-        http.formLogin().loginPage("/login").failureUrl("/login-error").and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
-        http.httpBasic();
+        httpSecurity.formLogin().loginPage("/login").failureUrl("/login-error").and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
+        httpSecurity.httpBasic();
     }
 
 //    @Bean
