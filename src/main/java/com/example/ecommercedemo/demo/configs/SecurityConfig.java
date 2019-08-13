@@ -20,10 +20,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    
+
     @Autowired
     UserPersistenceService userPersistenceService;
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/secured/**").hasAuthority("USER").antMatchers("/", "/**").permitAll();
@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().loginPage("/login").failureUrl("/login-error").and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
         http.httpBasic();
     }
-    
+
 //    @Bean
 //    public AuthenticationSuccessHandler successHandler() {
 //        return (HttpServletRequest request, HttpServletResponse response, Authentication authentication) -> {
@@ -39,12 +39,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //            response.sendRedirect(referer);
 //        };
 //    }
-    
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
-    
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userPersistenceService).passwordEncoder(passwordEncoder());
